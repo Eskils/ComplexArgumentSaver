@@ -17,16 +17,7 @@
     return self;
 }
 
-+(PrecompiledMetalFunction) precompiledMetalFunctionWithCommandQueue: (id<MTLCommandQueue>)commandQueue piplineState: (id<MTLComputePipelineState>)pipelineState andMx: (NSUInteger)mx
-{
-    struct PrecompiledMetalFunction precompiledFunction;
-    precompiledFunction.commandQueue = commandQueue;
-    precompiledFunction.pipelineState = pipelineState;
-    precompiledFunction.mx = mx;
-    return precompiledFunction;
-}
-
--(PrecompiledMetalFunction) precompileMetalFunctionWithName: (NSString*)name
+-(PrecompiledMetalFunction*) precompileMetalFunctionWithName: (NSString*)name
 {
     id<MTLLibrary> library = [self.device newDefaultLibrary];
     id<MTLFunction> function = [library newFunctionWithName: name];
@@ -42,10 +33,10 @@
     MTLSize max = self.device.maxThreadsPerThreadgroup;
     NSUInteger mx = (NSUInteger)sqrtf((float)max.width);
     
-    return [MetalFunctions precompiledMetalFunctionWithCommandQueue: commandQueue piplineState: pipelineState andMx: mx];
+    return [PrecompiledMetalFunction precompiledMetalFunctionWithCommandQueue: commandQueue piplineState: pipelineState andMx: mx];
 }
 
--(void) performCompiledMetalFunction: (PrecompiledMetalFunction)function numWidth: (NSUInteger)numWidth numHeight: (NSUInteger)numHeight commandEncoderConfiguration: (CommandEncoderConfigurationBlock)commandEncoderConfiguration
+-(void) performCompiledMetalFunction: (PrecompiledMetalFunction*)function numWidth: (NSUInteger)numWidth numHeight: (NSUInteger)numHeight commandEncoderConfiguration: (CommandEncoderConfigurationBlock)commandEncoderConfiguration
 {
     id<MTLCommandBuffer> commandBuffer = [function.commandQueue commandBuffer];
     id<MTLComputeCommandEncoder> commandEncoder = [commandBuffer computeCommandEncoder];
@@ -76,19 +67,20 @@
     return [self.device newTextureWithDescriptor: descriptor];
 }
 
--(void) modularWithFunction: (PrecompiledMetalFunction)function texture: (id<MTLTexture>)texture a: (simd_float2)a b: (simd_float2)b power: (float)power
+-(void) modularWithFunction: (PrecompiledMetalFunction*)function texture: (id<MTLTexture>)texture a: (simd_float2)a b: (simd_float2)b power: (float)power
 {
+    
     [self performCompiledMetalFunction: function numWidth: texture.width numHeight: texture.height commandEncoderConfiguration:^(id<MTLComputeCommandEncoder> _Nonnull encoder) {
         [encoder setTexture: texture atIndex: 0];
         
-        id<MTLBuffer> aBuffer = [self.device newBufferWithBytes: &a length: sizeof(a) options: MTLResourceStorageModeShared];
+        id<MTLBuffer> aBuffer = [self.device newBufferWithBytes: &a length: sizeof( simd_float2 ) options: MTLResourceStorageModeShared];
         [encoder setBuffer: aBuffer offset: 0 atIndex: 0];
         
-        id<MTLBuffer> bBuffer = [self.device newBufferWithBytes: &b length: sizeof(b) options: MTLResourceStorageModeShared];
-        [encoder setBuffer: bBuffer offset: 0 atIndex: 0];
+        id<MTLBuffer> bBuffer = [self.device newBufferWithBytes: &b length: sizeof( simd_float2 ) options: MTLResourceStorageModeShared];
+        [encoder setBuffer: bBuffer offset: 0 atIndex: 1];
         
-        id<MTLBuffer> powerBuffer = [self.device newBufferWithBytes: &power length: sizeof(power) options: MTLResourceStorageModeShared];
-        [encoder setBuffer: powerBuffer offset: 0 atIndex: 0];
+        id<MTLBuffer> powerBuffer = [self.device newBufferWithBytes: &power length: sizeof( float ) options: MTLResourceStorageModeShared];
+        [encoder setBuffer: powerBuffer offset: 0 atIndex: 2];
     }];
 }
 
