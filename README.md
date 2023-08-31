@@ -2,7 +2,7 @@
 
   A macOS screen saver of the mezmerizing pattern in complex numbers.
 
-https://github.com/Eskils/ComplexArgumentSaver/assets/26850613/9f5a467b-4db4-4569-b269-4108259b3568
+https://github.com/Eskils/ComplexArgumentSaver/assets/26850613/ec6bdf21-3836-4a30-8ee2-12ae0aa6ad79
 
 ## Usage
 
