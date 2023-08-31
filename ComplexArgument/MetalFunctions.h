@@ -20,11 +20,11 @@ typedef void (^CommandEncoderConfigurationBlock)(id<MTLComputeCommandEncoder>);
 
 -(PrecompiledMetalFunction*) precompileMetalFunctionWithName: (NSString*)name;
 
--(void) performCompiledMetalFunction: (PrecompiledMetalFunction*)function numWidth: (NSUInteger)numWidth numHeight: (NSUInteger)numHeight commandEncoderConfiguration: (CommandEncoderConfigurationBlock)commandEncoderConfiguration;
+-(void) performCompiledMetalFunction: (PrecompiledMetalFunction*)function numWidth: (NSUInteger)numWidth numHeight: (NSUInteger)numHeight texture: (id<MTLTexture>)texture commandEncoderConfiguration: (CommandEncoderConfigurationBlock)commandEncoderConfiguration;
 
 - (id<MTLTexture>) makeTextureOfSize: (NSUInteger)size;
 
--(void) modularWithFunction: (PrecompiledMetalFunction*)function texture: (id<MTLTexture>)texture a: (simd_float2)a b: (simd_float2)b power: (float)power;
+-(void) modularWithFunction: (PrecompiledMetalFunction*)function texture: (id<MTLTexture>)texture a: (simd_float2)a b: (simd_float2)b power: (float)power sqrtPow: (float)sqrtPow;
 
 @end
 

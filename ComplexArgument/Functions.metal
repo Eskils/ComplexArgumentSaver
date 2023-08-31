@@ -47,11 +47,22 @@ float4 rgbFromHue(float hue) {
     return float4(r, g, b, 1);
 }
 
+float4 primitivFarge(float rate, float offset) {
+    float k = 2 * M_PI_F * rate + offset;
+    
+    float r = (sin(k) + 1) / 2;
+    float g = (sin(k + M_PI_2_F) + 1) / 2;
+    float b = (sin(k + 3 * M_PI_2_F) + 1) / 2;
+    
+    return float4(r, g, b, 1);
+}
+
 
 kernel void modular(texture2d<float, access::write> outTexture [[texture(0)]],
                     device const float2 *a [[buffer(0)]],
                     device const float2 *b [[buffer(1)]],
                     device const float *power [[buffer(2)]],
+                    device const float *sqrtPow [[buffer(3)]],
                     uint2 gid [[thread_position_in_grid]])
 
 {
@@ -62,10 +73,10 @@ kernel void modular(texture2d<float, access::write> outTexture [[texture(0)]],
     float2 point = float2(x,y);
     float2 t1 = cmpx_pow(point, *power);
     float2 t2 = cmpx_mul(*a, point);
-    float2 ySquared = cmpx_add(cmpx_add(t1, t2), *b);
-    float2 z = cmpx_pow(ySquared, 0.5f);
+    float2 ySquared = t1 + t2 + *b;
+    float2 z = cmpx_pow(ySquared, *sqrtPow);
     
-    float4 pixel = rgbFromHue(cmpx_argument(z));
+    float4 pixel = primitivFarge(cmpx_argument(z), 2);
 
     outTexture.write(pixel, gid);
 }

@@ -23,6 +23,13 @@
 		6B76A77428F2E35F009FA7E2 /* PrecompiledMetalFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B76A77228F2E35F009FA7E2 /* PrecompiledMetalFunction.h */; };
 		6B76A77528F2E35F009FA7E2 /* PrecompiledMetalFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B76A77328F2E35F009FA7E2 /* PrecompiledMetalFunction.m */; };
 		6B76A77628F2E35F009FA7E2 /* PrecompiledMetalFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B76A77328F2E35F009FA7E2 /* PrecompiledMetalFunction.m */; };
+		7B840D052A635BEA0098B21F /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B840D042A635BEA0098B21F /* thumbnail.png */; };
+		7BA091232A614C460052E8BD /* SineNoiseSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BA091212A614C460052E8BD /* SineNoiseSource.h */; };
+		7BA091242A614C460052E8BD /* SineNoiseSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BA091222A614C460052E8BD /* SineNoiseSource.m */; };
+		7BA091252A614C460052E8BD /* SineNoiseSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BA091222A614C460052E8BD /* SineNoiseSource.m */; };
+		7BE9DD902919010100F2CE57 /* Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE9DD8E2919010000F2CE57 /* Renderer.h */; };
+		7BE9DD912919010100F2CE57 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9DD8F2919010000F2CE57 /* Renderer.m */; };
+		7BE9DD922919010100F2CE57 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9DD8F2919010000F2CE57 /* Renderer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +50,11 @@
 		6B76A76D28F2D0F1009FA7E2 /* ComplexArgumentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComplexArgumentViewController.m; sourceTree = "<group>"; };
 		6B76A77228F2E35F009FA7E2 /* PrecompiledMetalFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrecompiledMetalFunction.h; sourceTree = "<group>"; };
 		6B76A77328F2E35F009FA7E2 /* PrecompiledMetalFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrecompiledMetalFunction.m; sourceTree = "<group>"; };
+		7B840D042A635BEA0098B21F /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
+		7BA091212A614C460052E8BD /* SineNoiseSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SineNoiseSource.h; sourceTree = "<group>"; };
+		7BA091222A614C460052E8BD /* SineNoiseSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SineNoiseSource.m; sourceTree = "<group>"; };
+		7BE9DD8E2919010000F2CE57 /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		7BE9DD8F2919010000F2CE57 /* Renderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,11 +98,16 @@
 			children = (
 				6B22037A28ECAEAA00265CE9 /* ComplexArgumentView.h */,
 				6B22037C28ECAEAA00265CE9 /* ComplexArgumentView.m */,
+				7BE9DD8E2919010000F2CE57 /* Renderer.h */,
+				7BE9DD8F2919010000F2CE57 /* Renderer.m */,
+				7BA091212A614C460052E8BD /* SineNoiseSource.h */,
+				7BA091222A614C460052E8BD /* SineNoiseSource.m */,
 				6B22038328ECAF2700265CE9 /* Functions.metal */,
 				6B22038528ECAF9D00265CE9 /* MetalFunctions.h */,
 				6B22038628ECAF9D00265CE9 /* MetalFunctions.m */,
 				6B76A77228F2E35F009FA7E2 /* PrecompiledMetalFunction.h */,
 				6B76A77328F2E35F009FA7E2 /* PrecompiledMetalFunction.m */,
+				7B840D032A635BC10098B21F /* Resources */,
 			);
 			path = ComplexArgument;
 			sourceTree = "<group>";
@@ -110,6 +127,14 @@
 			path = ComplexArgumentView;
 			sourceTree = "<group>";
 		};
+		7B840D032A635BC10098B21F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7B840D042A635BEA0098B21F /* thumbnail.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -119,7 +144,9 @@
 			files = (
 				6B22038728ECAF9D00265CE9 /* MetalFunctions.h in Headers */,
 				6B22037B28ECAEAA00265CE9 /* ComplexArgumentView.h in Headers */,
+				7BA091232A614C460052E8BD /* SineNoiseSource.h in Headers */,
 				6B76A77428F2E35F009FA7E2 /* PrecompiledMetalFunction.h in Headers */,
+				7BE9DD902919010100F2CE57 /* Renderer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,7 +195,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					6B22037628ECAEAA00265CE9 = {
 						CreatedOnToolsVersion = 14.0;
@@ -202,6 +229,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B840D052A635BEA0098B21F /* thumbnail.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,9 +249,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BA091242A614C460052E8BD /* SineNoiseSource.m in Sources */,
 				6B22037D28ECAEAA00265CE9 /* ComplexArgumentView.m in Sources */,
 				6B22038428ECAF2700265CE9 /* Functions.metal in Sources */,
 				6B76A77528F2E35F009FA7E2 /* PrecompiledMetalFunction.m in Sources */,
+				7BE9DD912919010100F2CE57 /* Renderer.m in Sources */,
 				6B22038828ECAF9D00265CE9 /* MetalFunctions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,10 +262,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BA091252A614C460052E8BD /* SineNoiseSource.m in Sources */,
 				6B76A76E28F2D0F1009FA7E2 /* ComplexArgumentViewController.m in Sources */,
 				6B76A76728F2D0C6009FA7E2 /* main.m in Sources */,
 				6B76A77028F2D146009FA7E2 /* Functions.metal in Sources */,
 				6B76A77628F2E35F009FA7E2 /* PrecompiledMetalFunction.m in Sources */,
+				7BE9DD922919010100F2CE57 /* Renderer.m in Sources */,
 				6B76A76F28F2D141009FA7E2 /* ComplexArgumentView.m in Sources */,
 				6B76A76028F2D0C6009FA7E2 /* AppDelegate.m in Sources */,
 				6B76A77128F2D149009FA7E2 /* MetalFunctions.m in Sources */,
@@ -289,6 +321,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -347,6 +380,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -371,7 +405,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = EUKTZ7725R;
+				GCC_FAST_MATH = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = ComplexArgumentView;
@@ -390,7 +426,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = EUKTZ7725R;
+				GCC_FAST_MATH = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = ComplexArgumentView;
@@ -409,9 +447,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ComplexArgumentView/ComplexArgumentView.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = EUKTZ7725R;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -435,9 +475,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ComplexArgumentView/ComplexArgumentView.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = EUKTZ7725R;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;

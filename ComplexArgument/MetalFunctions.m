@@ -19,13 +19,24 @@
 
 -(PrecompiledMetalFunction*) precompileMetalFunctionWithName: (NSString*)name
 {
-    id<MTLLibrary> library = [self.device newDefaultLibrary];
+    NSError * error;
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    id<MTLLibrary> library = [self.device newDefaultLibraryWithBundle: bundle error: &error];
+    if (error != NULL) {
+        NSLog(@"Metal library is nil. Aborting with error %@", error);
+        abort();
+    }
+    
     id<MTLFunction> function = [library newFunctionWithName: name];
     
-    NSError * pipelineStateError;
-    id<MTLComputePipelineState> pipelineState = [self.device newComputePipelineStateWithFunction: function error: &pipelineStateError];
-    if (pipelineStateError != NULL) {
-        NSLog(@"%@", pipelineStateError);
+    if (function == NULL) {
+        NSLog(@"Metal function is nil. Aborting");
+        abort();
+    }
+    
+    id<MTLComputePipelineState> pipelineState = [self.device newComputePipelineStateWithFunction: function error: &error];
+    if (error != NULL) {
+        NSLog(@"Aborting with pipelineStateError: %@", error);
         abort();
     }
     
@@ -36,7 +47,7 @@
     return [PrecompiledMetalFunction precompiledMetalFunctionWithCommandQueue: commandQueue piplineState: pipelineState andMx: mx];
 }
 
--(void) performCompiledMetalFunction: (PrecompiledMetalFunction*)function numWidth: (NSUInteger)numWidth numHeight: (NSUInteger)numHeight commandEncoderConfiguration: (CommandEncoderConfigurationBlock)commandEncoderConfiguration
+-(void) performCompiledMetalFunction: (PrecompiledMetalFunction*)function numWidth: (NSUInteger)numWidth numHeight: (NSUInteger)numHeight texture: (id<MTLTexture>)texture commandEncoderConfiguration: (CommandEncoderConfigurationBlock)commandEncoderConfiguration
 {
     id<MTLCommandBuffer> commandBuffer = [function.commandQueue commandBuffer];
     id<MTLComputeCommandEncoder> commandEncoder = [commandBuffer computeCommandEncoder];
@@ -51,6 +62,13 @@
     
     [commandEncoder dispatchThreadgroups:threadGroups threadsPerThreadgroup:threadGroupCount];
     [commandEncoder endEncoding];
+    
+    if (texture) {
+        id<MTLBlitCommandEncoder> blitEncoder = [commandBuffer blitCommandEncoder];
+        [blitEncoder synchronizeTexture: texture slice: 0 level: 0];
+        [blitEncoder endEncoding];
+    }
+    
     [commandBuffer commit];
     [commandBuffer waitUntilCompleted];
 }
@@ -62,15 +80,15 @@
     [descriptor setHeight: size];
     [descriptor setTextureType: MTLTextureType2D];
     [descriptor setPixelFormat: MTLPixelFormatRGBA8Unorm];
-    [descriptor setStorageMode: MTLStorageModeShared];
-    [descriptor setUsage: MTLTextureUsageShaderWrite];
+    [descriptor setStorageMode: MTLStorageModeManaged];
+    [descriptor setUsage: MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite];
     return [self.device newTextureWithDescriptor: descriptor];
 }
 
--(void) modularWithFunction: (PrecompiledMetalFunction*)function texture: (id<MTLTexture>)texture a: (simd_float2)a b: (simd_float2)b power: (float)power
+-(void) modularWithFunction: (PrecompiledMetalFunction*)function texture: (id<MTLTexture>)texture a: (simd_float2)a b: (simd_float2)b power: (float)power sqrtPow: (float)sqrtPow
 {
     
-    [self performCompiledMetalFunction: function numWidth: texture.width numHeight: texture.height commandEncoderConfiguration:^(id<MTLComputeCommandEncoder> _Nonnull encoder) {
+    [self performCompiledMetalFunction: function numWidth: texture.width numHeight: texture.height texture: texture commandEncoderConfiguration:^(id<MTLComputeCommandEncoder> _Nonnull encoder) {
         [encoder setTexture: texture atIndex: 0];
         
         id<MTLBuffer> aBuffer = [self.device newBufferWithBytes: &a length: sizeof( simd_float2 ) options: MTLResourceStorageModeShared];
@@ -81,6 +99,9 @@
         
         id<MTLBuffer> powerBuffer = [self.device newBufferWithBytes: &power length: sizeof( float ) options: MTLResourceStorageModeShared];
         [encoder setBuffer: powerBuffer offset: 0 atIndex: 2];
+        
+        id<MTLBuffer> sqrtPowBuffer = [self.device newBufferWithBytes: &sqrtPow length: sizeof( float ) options: MTLResourceStorageModeShared];
+        [encoder setBuffer: sqrtPowBuffer offset: 0 atIndex: 3];
     }];
 }
 

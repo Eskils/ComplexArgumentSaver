@@ -6,25 +6,14 @@
 //
 
 #import "MetalFunctions.h"
+#import <SpriteKit/SpriteKit.h>
 #import <GameplayKit/GameplayKit.h>
 #import <ScreenSaver/ScreenSaver.h>
+#import "Renderer.h"
 
 @interface ComplexArgumentView : ScreenSaverView
 
-@property CVDisplayLinkRef displayLink;
-@property simd_float2 a;
-@property simd_float2 b;
-@property float power;
-@property MetalFunctions *metalFunctions;
-@property id<MTLTexture> texture;
-@property PrecompiledMetalFunction* modularMetalFunction;
-@property NSImageView *imageView;
-@property int size;
-@property void *buffer;
-@property NSArray<GKNoise*> *noiseGenerators;
-@property float t;
-@property float deltaT;
-@property bool isRendering;
+@property Renderer *renderer;
 
 - (void)animateOneFrame;
 
